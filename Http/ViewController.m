@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "Http.h"
 @interface ViewController ()
 
 @end
@@ -17,7 +17,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [Http post:@{} url:@"123123123" config:@{}];
 }
-
-
 @end
