@@ -15,6 +15,7 @@
 @interface NetModel : BaseModel
 @property (nonatomic, assign) BOOL animation;
 @property (nonatomic, assign) BOOL token;
+@property (nonatomic, assign) BOOL isAllUrl;
 @end
 @implementation NetModel
 @end
@@ -39,6 +40,12 @@
 
 + (void)get:(NSDictionary *)param url:(NSString *)url config:(NSDictionary *)config callback:(nonnull HttpCallback)callback {
     NSMutableURLRequest *request = [self makeRequest:param url:url config:config];
+    [request setHTTPMethod:@"GET"];
+    [self sendRequest:request callback:callback];
+}
+
++ (void)get:(NSDictionary *)param allUrl:(NSString *)url callback:(HttpCallback)callback {
+    NSMutableURLRequest *request = [self makeRequest:param url:url config:nil];
     [request setHTTPMethod:@"GET"];
     [self sendRequest:request callback:callback];
 }
@@ -85,19 +92,19 @@
 
 + (NSMutableURLRequest *)makeRequest:(NSDictionary *)param url:(NSString *)url config:(NSDictionary *)config {
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",BASEURL,url];
+    NSString *urlString = [NSString stringWithFormat:@"%@",url];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *temp_URL = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:temp_URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:HTTPTIMEOUT];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     //处理参数
-    NetModel *m = [self handleDefaultConfig:config];
-    if (m.token) {
-        NSString *token = [self getAppToken];
-        NSString *value = [NSString stringWithFormat:@"Bearer %@",token];
-        [request addValue:value forHTTPHeaderField:@"Authorization"];
-    }
+//    NetModel *m = [self handleDefaultConfig:config];
+//    if (m.token) {
+//        NSString *token = [self getAppToken];
+//        NSString *value = [NSString stringWithFormat:@"Bearer %@",token];
+//        [request addValue:value forHTTPHeaderField:@"Authorization"];
+//    }
     NSError *error;
     NSData *body = [NSJSONSerialization dataWithJSONObject:param options:NSJSONWritingFragmentsAllowed error:&error];
     if (error) {

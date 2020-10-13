@@ -17,6 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [Http post:@{} url:@"123123123" config:@{}];
+    NSString *url = @"https://itunes.apple.com/cn/lookup?id=1495123590";
+    [Http post:@{} url:url callback:^(id _Nonnull data) {
+        NSLog(@"数据 = %@",data);
+    }];
 }
 @end

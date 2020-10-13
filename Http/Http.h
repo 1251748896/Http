@@ -15,7 +15,8 @@ typedef void (^HttpCallback)(id);
 @interface Http : NSObject
 
 + (void)post:(NSDictionary *)param url:(NSString *)url callback:(HttpCallback)callback;
-+ (void)get:(NSDictionary *)param url:(NSString *)url callback:(HttpCallback)callback;;
++ (void)get:(NSDictionary *)param url:(NSString *)url callback:(HttpCallback)callback;
++ (void)get:(NSDictionary *)param allUrl:(NSString *)url callback:(HttpCallback)callback;
 + (void)post:(NSDictionary *)param url:(NSString *)url config:(nullable NSDictionary *)config callback:(HttpCallback)callback;
 + (void)get:(NSDictionary *)param url:(NSString *)url config:(nullable NSDictionary *)config callback:(HttpCallback)callback;
 @end
